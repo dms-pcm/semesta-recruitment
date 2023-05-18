@@ -15,7 +15,7 @@ class CreatePersyaratanRecruitmentTable extends Migration
     {
         Schema::create('persyaratan_recruitment', function (Blueprint $table) {
             $table->id();
-            $table->string('recruitment_id');
+            $table->foreignId('recruitment_id')->constrained('recruitments')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('persyaratan_id');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

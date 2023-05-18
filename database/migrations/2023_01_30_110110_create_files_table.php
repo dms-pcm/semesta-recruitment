@@ -17,7 +17,7 @@ class CreateFilesTable extends Migration
             $table->id();
             $table->string('syarat_id');
             $table->string('recruitment_id');
-            $table->string('participant_id');
+            $table->foreignId('participant_id')->constrained('participants')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('attachment');
             $table->string('originalName');
             $table->unsignedBigInteger('created_by')->nullable();

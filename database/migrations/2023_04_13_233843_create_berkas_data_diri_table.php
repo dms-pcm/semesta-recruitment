@@ -17,7 +17,7 @@ class CreateBerkasDataDiriTable extends Migration
             $table->id();
             $table->string('syarat_id');
             $table->string('recruitment_id');
-            $table->string('participant_id');
+            $table->foreignId('participant_id')->constrained('participants')->cascadeOnDelete()->cascadeOnUpdate();
             $table->text('value');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
