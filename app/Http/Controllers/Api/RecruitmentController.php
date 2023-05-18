@@ -31,7 +31,7 @@ class RecruitmentController extends Controller
     public function index()
     {
         try {
-            $query = Recruitment::with('persyaratan')->get();
+            $query = Recruitment::with('persyaratan')->orderBy('id', 'DESC')->get();
             if (!$query) {
                 return response()->json([
                     'data' => [],
