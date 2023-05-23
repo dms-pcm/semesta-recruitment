@@ -12,6 +12,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportParticipants;
 use App\Exports\DaftarHadirExport;
 use App\Models\Participants;
+use PDF;
 
 class ExportController extends Controller
 {
@@ -121,5 +122,24 @@ class ExportController extends Controller
         });
 
         return Excel::download(new DaftarHadirExport($data), 'Daftar Hadir Peserta-'.$request->input('nama_rekt').'.xlsx');
+    }
+
+    public function exportPDF(Request $request)
+    {
+        $data = Participants::select('name_user','phone','email')
+                            ->where('recruitment_id', $request->input('rekt_id'))
+                            ->get();
+        $rekrutmen_name = $request->input('nama_rekt');
+        $pdf = PDF::loadView('pdf.template', compact('data','rekrutmen_name'));
+        $pdf->setPaper('A4', 'landscape');
+        $filename = 'Daftar Hadir Peserta-'.$request->input('nama_rekt').'.pdf';
+        return $pdf->download($filename, ['Content-Type' => 'application/pdf']);
+
+        //Kalau mau disimpan pada direktori
+        // $pdf->save(public_path('fe/' . $filename));
+        // return response()->json([
+        //     'message' => 'PDF exported successfully',
+        //     'file_url' => url('pdf/' . $filename)
+        // ]);
     }
 }

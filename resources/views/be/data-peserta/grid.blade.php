@@ -34,7 +34,8 @@
                                                 Export
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="javascript:void(0)" id="daftar-hadir">Daftar Hadir</a></li>
+                                                <!-- <li><a class="dropdown-item" href="javascript:void(0)" id="daftar-hadir">Daftar Hadir</a></li> -->
+                                                <li><a class="dropdown-item" href="javascript:void(0)" id="daftar-hadir-pdf">Daftar Hadir</a></li>
                                                 <li><a class="dropdown-item" href="javascript:void(0)" id="data-peserta">Data Peserta</a></li>
                                             </ul>
                                         </div>
@@ -53,9 +54,9 @@
                                 <div class="col-md-2 tampilkan">
                                     <button type="button" class="btn btn-primary mb-3" onclick="filter()"><i class="bi bi-view-list me-1"></i> Tampilkan</button>
                                 </div>
-                                <div class="col-md-2">
+                                <!-- <div class="col-md-2">
                                     <button type="button" class="btn btn-outline-secondary mb-3 d-none" id="btn-hadir">Buat Daftar Hadir</button>
-                                </div>
+                                </div> -->
                             </div>
 
                             <table class="table d-none w-100" id="tbl-peserta">

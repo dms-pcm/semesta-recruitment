@@ -3,6 +3,7 @@ jQuery(document).ready(function () {
     countUser();
     chart();
     rektNew();
+    getTitle();
     $("#nav-dashboard").removeClass("collapsed");
 });
 
@@ -21,7 +22,7 @@ function countRect() {
             );
         },
         error: function (xhr) {
-            handleErrorSimpan(xhr);
+            // handleErrorSimpan(xhr);
         },
     });
 }
@@ -69,9 +70,23 @@ function chart() {
                 ];
                 var values = [];
                 for (var i in res) {
-                    // labels.push(data[i].label);
                     values.push(res[i]);
                 }
+
+                function getRandomColor() {
+                    var letters = "0123456789ABCDEF";
+                    var color = "#";
+                    for (var i = 0; i < 6; i++) {
+                        color += letters[Math.floor(Math.random() * 16)];
+                    }
+                    return color;
+                }
+
+                var backgroundColors = [];
+                for (var i = 0; i < labels.length; i++) {
+                    backgroundColors.push(getRandomColor());
+                }
+
                 var ctx = document.getElementById("myChart").getContext("2d");
                 var myChart = new Chart(ctx, {
                     type: "doughnut",
@@ -81,18 +96,8 @@ function chart() {
                             {
                                 label: "My First Dataset",
                                 data: values,
-                                backgroundColor: [
-                                    "rgb(54, 162, 235)",
-                                    "rgb(255, 99, 132)",
-                                    "rgb(103, 255, 86)",
-                                ],
+                                backgroundColor: backgroundColors,
                                 hoverOffset: 4,
-                                // borderColor: [
-                                //     "rgba(255, 99, 132, 1)",
-                                //     "rgba(54, 162, 235, 1)",
-                                //     "rgba(255, 206, 86, 1)",
-                                // ],
-                                // borderWidth: 1,
                             },
                         ],
                     },
@@ -117,7 +122,7 @@ function rektNew() {
                 $("#empty-data").removeClass("d-none");
             } else {
                 $("#empty-data").addClass("d-none");
-                for (let i = 0; i < 5; i++) {
+                for (let i = 0; i < 3; i++) {
                     if (res[i]?.description != undefined) {
                         let result =
                             res[i]?.description.length > 73
@@ -125,7 +130,7 @@ function rektNew() {
                                 : res[i]?.description;
                         html += `
                         <div class="post-item clearfix">
-                            <img src="${baseUrl}storage/${res[i]?.attachment}" style="object-fit: cover;height:80px;" alt="${res[i]?.title}">
+                            <img src="${baseUrl}storage/${res[i]?.attachment}" alt="${res[i]?.title}">
                             <h4><a>${res[i]?.title}</a></h4>
                             <p>${result}</p>
                         </div>
@@ -136,7 +141,128 @@ function rektNew() {
             }
         },
         error: function (xhr) {
-            handleErrorSimpan(xhr);
+            // handleErrorSimpan(xhr);
         },
     });
+}
+
+function getTitle() {
+    $.ajax({
+        url: `${urlApi}participants/title`,
+        type: "GET",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        async: true,
+        cache: false,
+        success: function (response) {
+            $.each(response?.data, function (index, element) {
+                $("#inputFilter").append(
+                    '<option value="' +
+                        element?.id +
+                        '">' +
+                        element?.title +
+                        "</option>"
+                );
+                $(".selectpicker").selectpicker("refresh");
+            });
+        },
+        error: function (xhr) {
+            // handleErrorTable(xhr);
+        },
+    });
+}
+
+var ctx = document.getElementById("myGrafik").getContext("2d");
+var myChart = null; // Variable to hold the chart object
+
+function createChart(labels, datasets) {
+    return new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: datasets,
+        },
+    });
+}
+
+function destroyChart() {
+    if (myChart) {
+        myChart.destroy();
+        myChart = null;
+    }
+}
+
+function show() {
+    if ($("#inputFilter").val() == "") {
+        Swal.fire({
+            title: "Oopss...",
+            icon: "warning",
+            text: "Silahkan pilih rekrutmen terlebih dahulu",
+            allowOutsideClick: false,
+        });
+    } else {
+        $.ajax({
+            url: `${urlApi}dashboard/grafik`,
+            type: "GET",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+            data: {
+                rektID: $("#inputFilter").val(),
+            },
+            success: function (response) {
+                let res = response?.data;
+                $("#grafik").removeClass("d-none");
+                $("#selectRekrutmen").addClass("d-none");
+                var labels = [
+                    "Total Peserta",
+                    "Peserta Tidak Lolos",
+                    "Peserta Lolos",
+                ];
+
+                var value = [];
+                for (var i in res) {
+                    value.push(res[i]);
+                }
+                var datasets = [];
+
+                function getRandomColor() {
+                    var letters = "0123456789ABCDEF";
+                    var color = "#";
+                    for (var i = 0; i < 6; i++) {
+                        color += letters[Math.floor(Math.random() * 16)];
+                    }
+                    return color;
+                }
+
+                destroyChart(); // Destroy the previous chart, if any
+
+                for (var i = 0; i < labels.length; i++) {
+                    var dataset = {
+                        label: labels[i],
+                        data: [],
+                        backgroundColor: [],
+                        hoverOffset: 4,
+                    };
+
+                    for (var j = 0; j < value.length; j++) {
+                        if (i == j) {
+                            dataset.data.push(value[j]);
+                            dataset.backgroundColor.push(getRandomColor());
+                        } else {
+                            dataset.data.push(0);
+                            dataset.backgroundColor.push("transparent");
+                        }
+                    }
+
+                    datasets.push(dataset);
+                }
+
+                myChart = createChart(labels, datasets); // Create the new chart
+            },
+        });
+    }
 }

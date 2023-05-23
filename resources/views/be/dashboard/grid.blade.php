@@ -99,39 +99,59 @@
                 </div>--}}<!-- End Customers Card -->
 
                 <!-- Website Traffic -->
-                <div class="card">
-
-                    <div class="card-body pb-0">
-                        <h5 class="card-title">Status Peserta Rekrutmen</h5>
-                        <!-- <div class="col-md-5 mb-4">
-                            <select class="selectpicker col-12" name="inputFilter" id="inputFilter" placeholder="Pilih rekrutmen" data-live-search="true">
-                                {{--<option value="0">Zero</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>--}}
-                            </select>
-                        </div> -->
-
-                        <!-- <div id="trafficChart" style="min-height: 400px;"></div> -->
-                        <div style="min-height: 400px;" id="chart">
-                            <canvas id="myChart" style="width:40%;height:auto;"></canvas>
-                        </div>
-
-                        <div id="empty" class="text-center mb-4 d-none">
-                            <div class="d-flex justify-content-center">
-                                <img src="{{asset('fe/assets/img/data-empty.png')}}" style="width:50%" alt="Data Kosong">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Analisa Peserta Setiap Rekrutmen</h5>
+                            
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <select class="selectpicker col-12" name="inputFilter" id="inputFilter" placeholder="Pilih rekrutmen" data-live-search="true">
+                                       
+                                    </select>
+                                </div>
+                                <div class="col-md-5 tampilkan">
+                                    <button type="button" class="btn btn-primary mb-3" onclick="show()"><i class="bi bi-view-list me-1"></i> Tampilkan</button>
+                                </div>
                             </div>
-                            <span class="text-muted" style="font-family:Poppins">Mohon maaf data belum tersedia.</span>
-                        </div>
+                            <div style="min-height: 400px;" class="d-none" id="grafik">
+                                <canvas id="myGrafik" style="width:40%;height:auto;"></canvas>
+                            </div>
 
+                            <div class="row d-flex justify-content-center" id="selectRekrutmen">
+                                <img src="{{asset('be/assets/img/option.png')}}" style="width:438px;margin-bottom:-20px" alt="Pilih rekrutmen">
+                                <p class="text-center text-muted fs-5 mb-2" style="font-family:arial;">Silahkan pilih rekrutmen terlebih dahulu...</p>
+                            </div>
+                        </div>
                     </div>
-                </div><!-- End Website Traffic -->
+                </div>
+                <!-- End Website Traffic -->
             </div>
         </div><!-- End Left side columns -->
 
         <!-- Right side columns -->
         <div class="col-lg-4">
 
+            <div class="card">
+
+                <div class="card-body pb-0">
+
+                    <h5 class="card-title">Analisa Peserta Semua Rekrutmen</h5>
+                            
+                    <div style="min-height: 400px;" id="chart">
+                        <canvas id="myChart" style="width:40%;height:auto;"></canvas>
+                    </div>
+
+                    <div id="empty" class="text-center mb-4 d-none">
+                        <div class="d-flex justify-content-center">
+                            <img src="{{asset('fe/assets/img/data-empty.png')}}" style="width:50%" alt="Data Kosong">
+                        </div>
+                        <span class="text-muted" style="font-family:Poppins">Mohon maaf data belum tersedia.</span>
+                    </div>
+
+                </div>
+            </div>
+            
             <!-- News & Updates Traffic -->
             <div class="card"> <!-- style="padding-bottom: 25px;" -->
 

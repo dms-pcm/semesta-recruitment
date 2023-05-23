@@ -110,12 +110,14 @@ Route::group(['middleware' => 'jwt.verify'], function () {
     Route::group(['prefix' => 'export'], function (){
         Route::get('/', 'App\Http\Controllers\Api\ExportController@exportData')->name('export.data');
         Route::get('data-hadir', 'App\Http\Controllers\Api\ExportController@dataHadir');
+        Route::get('data-hadir-pdf', 'App\Http\Controllers\Api\ExportController@exportPDF');
     });
 
     Route::group(['prefix' => 'dashboard'], function (){
         Route::get('countRect', 'App\Http\Controllers\Api\DashboardController@countRecruitment');
         Route::get('countUser', 'App\Http\Controllers\Api\DashboardController@countUser');
         Route::get('chart', 'App\Http\Controllers\Api\DashboardController@chart');
+        Route::get('grafik', 'App\Http\Controllers\Api\DashboardController@grafik');
         Route::get('newRekt', 'App\Http\Controllers\Api\DashboardController@newRekt');
     });
 

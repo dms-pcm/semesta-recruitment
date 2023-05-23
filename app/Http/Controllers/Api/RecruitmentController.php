@@ -272,7 +272,7 @@ class RecruitmentController extends Controller
                 // Looping email dan mengirim notifikasi
                 $data = [
                     'foto' => asset('storage/'.$data_recruitment->attachment),
-                    'idRect' => 'http://semesta-recruitment.test/detail-information?='.$data_recruitment->id,
+                    'idRect' => url('detail-information?=' . $data_recruitment->id),
                     'title' => $data_recruitment->title,
                     'kuota' => $data_recruitment->quantity
                 ];

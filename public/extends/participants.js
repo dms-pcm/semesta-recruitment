@@ -4,6 +4,7 @@ jQuery(document).ready(function () {
     getTitle();
     dataExport();
     daftarHadir();
+    daftarHadirPDF();
     $("#nav-peserta").removeClass("collapsed");
 });
 
@@ -928,6 +929,76 @@ function daftarHadir() {
                 var value = $("#inputFilter option:selected").text();
                 $.ajax({
                     url: `${urlApi}export/data-hadir`,
+                    type: "GET",
+                    data: {
+                        rekt_id: id,
+                        nama_rekt: value,
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                            "content"
+                        ),
+                        Authorization:
+                            "Bearer " + localStorage.getItem("token"),
+                    },
+                    xhrFields: {
+                        responseType: "blob",
+                    },
+                    success: function (response, status, xhr) {
+                        setTimeout(function () {
+                            loadStop();
+                            var filename = "";
+                            var disposition = xhr.getResponseHeader(
+                                "Content-Disposition"
+                            );
+                            if (
+                                disposition &&
+                                disposition.indexOf("attachment") !== -1
+                            ) {
+                                var filenameRegex =
+                                    /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                                var matches = filenameRegex.exec(disposition);
+                                if (matches != null && matches[1]) {
+                                    filename = matches[1].replace(/['"]/g, "");
+                                }
+                            }
+                            var link = document.createElement("a");
+                            link.href = window.URL.createObjectURL(response);
+                            link.download = filename;
+                            link.click();
+                        }, 1000);
+                    },
+                    error: function (xhr) {
+                        setTimeout(function () {
+                            loadStop();
+                            handleErrorSimpan(xhr);
+                        }, 1000);
+                    },
+                });
+            }
+        });
+    });
+}
+
+function daftarHadirPDF() {
+    $("#daftar-hadir-pdf").on("click", function () {
+        Swal.fire({
+            title: "Export Daftar Hadir?",
+            text: "Apakah anda yakin ingin mengexport daftar hadir rekrutmen ini!",
+            icon: "warning",
+            showCancelButton: true,
+            allowOutsideClick: false,
+            confirmButtonColor: "#198754",
+            cancelButtonColor: "#acacac",
+            cancelButtonText: "Batal",
+            confirmButtonText: "Iya, Export",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                loadStart();
+                var id = $("#inputFilter option:selected").val();
+                var value = $("#inputFilter option:selected").text();
+                $.ajax({
+                    url: `${urlApi}export/data-hadir-pdf`,
                     type: "GET",
                     data: {
                         rekt_id: id,

@@ -121,6 +121,48 @@ class DashboardController extends Controller
         }
     }
 
+    public function grafik(Request $request)
+    {
+        try {
+            $query1 = Participants::where('recruitment_id','=',$request->input('rektID'))->count();
+            $query2 = Participants::where('recruitment_id','=',$request->input('rektID'))->where('status_peserta','=','1')->count();
+            $query3 = Participants::where('recruitment_id','=',$request->input('rektID'))->where('status_peserta','=','2')->count();
+            if (!$query1 || !$query2 || !$query3) {
+                return response()->json([
+                    'data' => [
+                        'all' => $query1,
+                        'tidak' => $query2,
+                        'lolos' => $query3
+                    ],
+                    'status' => [
+                        'message' => 'Data gagal ditampilkan',
+                        'code' => 200
+                    ]
+                ],200);
+            }
+
+            return response()->json([
+                'data' => [
+                    'all' => $query1,
+                    'tidak' => $query2,
+                    'lolos' => $query3
+                ],
+                'status' => [
+                    'message' => 'Data berhasil ditampilkan',
+                    'code' => 200
+                ]
+            ],200);
+        } catch (\Exception $ex) {
+            return response()->json([
+                'data' => [],
+                'status' => [
+                    'message' => $ex->getMessage(),
+                    'code' => 500
+                ]
+            ],500);
+        }
+    }
+
     public function newRekt()
     {
         try {
