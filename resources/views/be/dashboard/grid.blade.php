@@ -114,8 +114,8 @@
                                     <button type="button" class="btn btn-primary mb-3" onclick="show()"><i class="bi bi-view-list me-1"></i> Tampilkan</button>
                                 </div>
                             </div>
-                            <div style="min-height: 400px;" class="d-none" id="grafik">
-                                <canvas id="myGrafik" style="width:40%;height:auto;"></canvas>
+                            <div  class="d-none" id="grafik">
+                                <div id="myGrafik"></div>
                             </div>
 
                             <div class="row d-flex justify-content-center" id="selectRekrutmen">
@@ -134,12 +134,12 @@
 
             <div class="card">
 
-                <div class="card-body pb-0">
+                <div class="card-body pb-3">
 
                     <h5 class="card-title">Analisa Peserta Semua Rekrutmen</h5>
                             
-                    <div style="min-height: 400px;" id="chart">
-                        <canvas id="myChart" style="width:40%;height:auto;"></canvas>
+                    <div id="chart">
+                        <div id="myChart"></div>
                     </div>
 
                     <div id="empty" class="text-center mb-4 d-none">
@@ -155,7 +155,7 @@
             <!-- News & Updates Traffic -->
             <div class="card"> <!-- style="padding-bottom: 25px;" -->
 
-                <div class="card-body pb-0">
+                <div class="card-body pb-3">
                     <h5 class="card-title">Rekrutmen Terbaru</h5>
 
                     <div class="news" id="content-body">

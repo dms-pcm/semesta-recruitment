@@ -267,7 +267,7 @@ class RecruitmentController extends Controller
 
             if ($data_recruitment) {
                 // Mengambil email dari tabel users
-                $emails = DB::table('users')->pluck('email')->toArray();
+                $emails = User::pluck('email')->toArray();
                 
                 // Looping email dan mengirim notifikasi
                 $data = [
