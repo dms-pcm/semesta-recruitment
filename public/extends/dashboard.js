@@ -42,7 +42,7 @@ function countUser() {
             );
         },
         error: function (xhr) {
-            handleErrorSimpan(xhr);
+            // handleErrorSimpan(xhr);
         },
     });
 }
@@ -125,7 +125,8 @@ function chart() {
                             breakpoint: 480,
                             options: {
                                 chart: {
-                                    width: 200,
+                                    width: "100%",
+                                    height: 300, // Ubah tinggi sesuai kebutuhan
                                 },
                             },
                         },

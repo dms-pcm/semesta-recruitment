@@ -270,7 +270,7 @@
                         // $("#saha").text(res?.company);
                     },
                     error: function (xhr) {
-                        handleErrorSimpan(xhr);
+                        // handleErrorSimpan(xhr);
                     },
                 });
             } else {
@@ -408,7 +408,7 @@
                     }
                 },
                 error: function (xhr) {
-                    handleErrorLogin(xhr);
+                    // handleErrorLogin(xhr);
                 },
             });
         }
@@ -428,7 +428,7 @@
                     notifikasi();
                 },
                 error: function (xhr) {
-                    handleErrorLogin(xhr);
+                    // handleErrorLogin(xhr);
                 },
             });
         }
@@ -445,7 +445,7 @@
                     notifikasi();
                 },
                 error: function (xhr) {
-                    handleErrorLogin(xhr);
+                    // handleErrorLogin(xhr);
                 },
             });
         }
