@@ -754,7 +754,7 @@ function accept(id) {
         icon: "warning",
         showCancelButton: true,
         allowOutsideClick: false,
-        confirmButtonColor: "#20c997",
+        confirmButtonColor: "#198754",
         cancelButtonColor: "#acacac",
         cancelButtonText: "Batal",
         confirmButtonText: "Iya, Yakin",

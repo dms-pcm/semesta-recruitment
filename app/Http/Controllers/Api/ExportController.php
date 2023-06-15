@@ -19,6 +19,7 @@ class ExportController extends Controller
     public function exportData(Request $request)
     {
         $data = Participants::select('recruitment_name','name_user','phone','address','email','status_berkas','status_peserta')
+                            ->where('status_berkas','=','2')
                             ->where('recruitment_id', $request->input('id_rekt'))
                             ->get();
         // $data->transform(function ($item) {
@@ -127,6 +128,7 @@ class ExportController extends Controller
     public function exportPDF(Request $request)
     {
         $data = Participants::select('name_user','phone','email')
+                            ->where('status_berkas','=','2')
                             ->where('recruitment_id', $request->input('rekt_id'))
                             ->get();
         $rekrutmen_name = $request->input('nama_rekt');

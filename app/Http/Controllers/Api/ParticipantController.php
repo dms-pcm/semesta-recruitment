@@ -356,7 +356,9 @@ class ParticipantController extends Controller
                     ]
                 ],422);
             } else {
-                if (Participants::where('user_id','=',$request->user_id)->exists() && Participants::where('recruitment_id','=',$request->recruitment_id)->exists()) {
+                // if (Participants::where('user_id','=',$request->user_id)->exists() && Participants::where('recruitment_id','=',$request->recruitment_id)->exists()) {
+                if (Participants::where('user_id', $request->user_id)->where('recruitment_id', $request->recruitment_id)->exists()) {
+                    // dd($request->user_id,$request->recruitment_id);
                     DB::rollBack();
                     return response()->json([
                         'data' => [],
