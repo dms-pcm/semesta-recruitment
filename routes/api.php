@@ -53,7 +53,7 @@ Route::get('show','App\Http\Controllers\Api\RecruitmentController@showRekt');
 Route::get('detail-rekt/{id}','App\Http\Controllers\Api\RecruitmentController@detail');
 Route::get('persyaratan/show', 'App\Http\Controllers\Api\PersyaratanController@showSyaratFe');
 Route::get('sosmed', 'App\Http\Controllers\Api\ProfileController@sosmed');
-Route::group(['middleware' => 'jwt.verify'], function () {
+Route::group(['middleware' => ['jwt.verify', 'throttle:100,1']], function () {
     Route::post('logout', 'App\Http\Controllers\Api\AuthController@logout');
     Route::post('refresh', 'App\Http\Controllers\Api\AuthController@refresh');
     Route::post('me', 'App\Http\Controllers\Api\AuthController@me');
