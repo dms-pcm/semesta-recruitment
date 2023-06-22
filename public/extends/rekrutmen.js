@@ -234,6 +234,7 @@ function addRecruitment() {
         formData.append("clock", $("#inputPukul").val());
         formData.append("location", $("#inputLokasi").val());
         formData.append("persyaratan", $("#inputPersyaratan").val());
+        formData.append("company", $("#inputCompany").val());
         formData.append("quantity", $("#quantity-peserta").val());
         formData.append("description", $("#inputDeskripsi").val());
     } else {
@@ -242,6 +243,7 @@ function addRecruitment() {
         formData.append("location", $("#inputLokasi").val());
         formData.append("attachment", $("input[type='file']")[0].files[0]);
         formData.append("persyaratan", $("#inputPersyaratan").val());
+        formData.append("company", $("#inputCompany").val());
         formData.append("quantity", $("#quantity-peserta").val());
         formData.append("description", $("#inputDeskripsi").val());
     }
@@ -290,6 +292,7 @@ function viewDetail(id) {
         success: async function (response) {
             let res = response?.data;
             $("#viewJudul").text(`${res?.title}`);
+            $("#viewCompany").text(`${res?.company}`);
             let waktu = res?.clock.split(" ");
             $("#viewTanggal").text(`${waktu[0]} ${waktu[1]} ${waktu[2]}`);
             $("#viewPukul").text(`${waktu[3]} WIB`);
@@ -367,6 +370,7 @@ function editRekrutmen(id) {
     $.each(data, function (index, element) {
         if (element?.id == id) {
             $("#editJadwal #editJudul").val(element?.title);
+            $("#editJadwal #editCompany").val(element?.company);
             $("#editJadwal #editPukul").val(element?.clock);
             $("#editJadwal #editLokasi").val(element?.location);
             $("#editJadwal #preview_edit").attr(
@@ -394,6 +398,7 @@ function editRekrutmen(id) {
         if (basedView == basedDB) {
             //not change picture
             formData.append("title", $("#editJadwal #editJudul").val());
+            formData.append("company", $("#editJadwal #editCompany").val());
             formData.append("clock", $("#editJadwal #editPukul").val());
             formData.append("location", $("#editJadwal #editLokasi").val());
             formData.append("id_recruitment", idRect);
@@ -411,6 +416,7 @@ function editRekrutmen(id) {
             );
         } else {
             formData.append("title", $("#editJadwal #editJudul").val());
+            formData.append("company", $("#editJadwal #editCompany").val());
             formData.append("clock", $("#editJadwal #editPukul").val());
             formData.append("location", $("#editJadwal #editLokasi").val());
             formData.append("id_recruitment", idRect);

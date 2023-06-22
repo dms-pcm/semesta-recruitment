@@ -93,7 +93,19 @@
                                                                                     <tr>
                                                                                         <td style="padding-bottom:4px">
                                                                                             <p style="margin:0;font-weight:400;font-size:14px;line-height:20px;color:#1f1f1f">
-                                                                                                Kuota Pendaftaran · {{ $kuota }} peserta
+                                                                                                Kuota Pendaftaran · <b>{{ $kuota }} peserta</b>
+                                                                                            </p>
+                                                                                            <p style="margin:0;font-weight:400;font-size:14px;line-height:20px;color:#1f1f1f">
+                                                                                                Perusahaan · <b>{{ $company }}</b>
+                                                                                            </p>
+                                                                                            <p style="margin:0;font-weight:400;font-size:14px;line-height:20px;color:#1f1f1f">
+                                                                                                Tanggal Rekrutmen · <b>{{ $date }}</b>
+                                                                                            </p>
+                                                                                            <p style="margin:0;font-weight:400;font-size:14px;line-height:20px;color:#1f1f1f">
+                                                                                                Persyaratan : <br>
+                                                                                                @foreach($matchingSyarat as $index => $syarat)
+                                                                                                    <b>{{ $loop->iteration }}. {{ $syarat }}</b><br>
+                                                                                                @endforeach
                                                                                             </p>
                                                                                         </td>
                                                                                     </tr>

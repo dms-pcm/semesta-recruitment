@@ -184,6 +184,7 @@ class RecruitmentController extends Controller
                 'attachment.required' => 'Upload gambar wajib diisi!',
                 'attachment.mimetypes' => 'Gambar yang diperbolehkan berupa file .jpeg, .jpg, .png',
                 'persyaratan.required' => 'Persyaratan wajib diisi!',
+                'company.required' => 'Perusahaan wajib diisi!',
                 'description.required' => 'Deskripsi wajib diisi!',
                 'quantity.required' => 'Kuota Peserta wajib diisi!',
                 'quantity.numeric' => 'Kuota Peserta harus berupa angka',
@@ -195,6 +196,7 @@ class RecruitmentController extends Controller
                 'location' => 'required',
                 'attachment' => 'required|mimetypes:image/jpeg,image/jpg,image/png',
                 'persyaratan' => 'required',
+                'company' => 'required',
                 'description' => 'required',
                 'quantity' => 'required|numeric',
             ],$errMessages);
@@ -244,11 +246,13 @@ class RecruitmentController extends Controller
                 $query->where('role_id', 2);
             })->get();
 
+            
             $data_recruitment = Recruitment::create([
                 'title' => $request->title,
                 'clock' => $request->clock,
                 'location' => $request->location,
                 'attachment' => $attachment,
+                'company' => $request->company,
                 // 'persyaratan' => $request->persyaratan,
                 'description' => $request->description,
                 'quantity' => $request->quantity,
@@ -269,12 +273,23 @@ class RecruitmentController extends Controller
                 // Mengambil email dari tabel users
                 $emails = User::pluck('email')->toArray();
                 
+
+                $data = Recruitment::with('persyaratan')->where('id', '=', $data_recruitment->id)->get();
+                $query = Syarat::select('id', 'syarat')->get();
+
+                $persyaratanIds = $data->pluck('persyaratan.*.persyaratan_id')->flatten()->all();
+                // $matchingSyarat = $query->whereIn('id', $persyaratanIds)->pluck('syarat')->implode(',');
+                $matchingSyarat = $query->whereIn('id', $persyaratanIds)->pluck('syarat')->toArray();
+
                 // Looping email dan mengirim notifikasi
                 $data = [
                     'foto' => asset('storage/'.$data_recruitment->attachment),
                     'idRect' => url('detail-information?=' . $data_recruitment->id),
                     'title' => $data_recruitment->title,
-                    'kuota' => $data_recruitment->quantity
+                    'kuota' => $data_recruitment->quantity,
+                    'company' => $data_recruitment->company,
+                    'date' => $data_recruitment->clock,
+                    'matchingSyarat' => $matchingSyarat,
                 ];
                 $content = view('emails.notification', $data)->render();
                 // dd($data);
@@ -321,6 +336,7 @@ class RecruitmentController extends Controller
                 // 'attachment.required' => 'Upload gambar wajib diisi!',
                 'attachment.mimetypes' => 'Gambar yang diperbolehkan berupa file .jpeg, .jpg, .png',
                 'persyaratan.required' => 'Persyaratan wajib diisi!',
+                'company.required' => 'Perusahaan wajib diisi!',
                 'description.required' => 'Deskripsi wajib diisi!',
                 'quantity.required' => 'Kuota Peserta wajib diisi!',
                 'quantity.numeric' => 'Kuota Peserta harus berupa angka',
@@ -332,6 +348,7 @@ class RecruitmentController extends Controller
                 'location' => 'required',
                 'attachment' => 'nullable|mimetypes:image/jpeg,image/jpg,image/png',
                 'persyaratan' => 'required',
+                'company' => 'required',
                 'description' => 'required',
                 'quantity' => 'required|numeric',
             ],$errMessages);
@@ -383,6 +400,7 @@ class RecruitmentController extends Controller
                     'title' => $request->title,
                     'clock' => $request->clock,
                     'location' => $request->location,
+                    'company' => $request->company,
                     // 'persyaratan' => $request->persyaratan,
                     'description' => $request->description,
                     'quantity' => $request->quantity

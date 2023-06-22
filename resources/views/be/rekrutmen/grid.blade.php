@@ -152,6 +152,10 @@
                             <option value="Essay Tentang Target Masa Depan">Essay Tentang Target Masa Depan</option>--}}
                         </select>
                     </div>
+                    <div class="col-md-12">
+                        <label for="inputCompany" class="form-label">Perusahaan</label>
+                        <input type="text" class="form-control" id="inputCompany" placeholder="Masukan nama perusahaan">
+                    </div>
                     <div class="col-12">
                         <label for="quantity" class="form-label">Kuota Pendaftaran</label><br>
                         <div class="number-input">
@@ -208,6 +212,11 @@
                         <div class="col-lg-9 col-md-8" id="viewPersyaratan">-</div>
                     </div>
     
+                    <div class="row detail-rekrutmen" style="margin-bottom: 18px;">
+                        <div class="col-lg-3 col-md-4 label fw-bold">Perusahaan</div>
+                        <div class="col-lg-9 col-md-8" id="viewCompany">-</div>
+                    </div>
+
                     <div class="row detail-rekrutmen" style="margin-bottom: 18px;">
                         <div class="col-lg-3 col-md-4 label fw-bold">Kuota Pendaftaran</div>
                         <div class="col-lg-9 col-md-8" id="viewQuantity">-</div>
@@ -281,6 +290,10 @@
                             <option value="Essay Tentang Pengalaman Hidup">Essay Tentang Pengalaman Hidup</option>
                             <option value="Essay Tentang Target Masa Depan">Essay Tentang Target Masa Depan</option>--}}
                         </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="editCompany" class="form-label">Perusahaan</label>
+                        <input type="text" class="form-control" id="editCompany" placeholder="Masukan nama perusahaan">
                     </div>
                     <div class="col-12">
                         <label for="quantity" class="form-label">Kuota Pendaftaran</label><br>
