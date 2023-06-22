@@ -14,7 +14,7 @@ class AddCompanyToRecruitmentsTable extends Migration
     public function up()
     {
         Schema::table('recruitments', function (Blueprint $table) {
-            $table->string('company');
+            $table->string('company')->nullable();
         });
     }
 
